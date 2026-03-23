@@ -56,7 +56,7 @@
             box-shadow: 0 0 10px var(--neon-red);
         }
 
-        /* --- STAGE HEADER & CYCLING VIDEOS --- */
+        /* --- STAGE HEADER & SEQUENTIAL VIDEOS --- */
         .stage-header {
             width: 100%; height: 45vh; position: relative;
             display: flex; justify-content: center; align-items: center;
@@ -70,6 +70,7 @@
             animation: slideFade 20s infinite;
         }
 
+        /* Video sequence: Each video gets exactly 5 seconds of the 20s loop */
         .slide-video:nth-child(1) { animation-delay: 0s; }
         .slide-video:nth-child(2) { animation-delay: 5s; }
         .slide-video:nth-child(3) { animation-delay: 10s; }
@@ -77,9 +78,9 @@
         
         @keyframes slideFade { 
             0% { opacity: 0; } 
-            5% { opacity: 0.7; } 
-            25% { opacity: 0.7; } 
-            30% { opacity: 0; } 
+            2% { opacity: 0.7; } /* Quick fade in at start of its turn */
+            23% { opacity: 0.7; } /* Stay solid for most of the 5s */
+            25% { opacity: 0; } /* Fade out right before next video */
             100% { opacity: 0; } 
         }
 
@@ -91,24 +92,15 @@
         .header-content { position: relative; z-index: 5; text-align: center; pointer-events: none;}
         .header-content h1 { 
             font-size: clamp(3rem, 12vw, 7.5rem); 
-            font-style: italic; 
-            text-transform: uppercase; 
-            margin: 0; 
-            line-height: 0.9; 
+            font-style: italic; font-weight: 900;
+            text-transform: uppercase; margin: 0; line-height: 0.9; 
             -webkit-text-stroke: 1px rgba(0,0,0,0.8); 
             text-shadow: 6px 6px 0px var(--neon-red), 0 0 30px rgba(0,0,0,0.8); 
-            letter-spacing: -2px; 
-            position: relative;
-            pointer-events: auto;
+            letter-spacing: -2px; position: relative; pointer-events: auto;
         }
 
-        /* Glitch Effect */
         .header-content h1:hover { animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite; }
-        .header-content h1::before, .header-content h1::after {
-            content: "PUERTO PORTAL"; position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.8; display: none;
-        }
-        .header-content h1:hover::before { display: block; color: #0ff; z-index: -1; animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) reverse both infinite; }
-        .header-content h1:hover::after { display: block; color: var(--neon-red); z-index: -2; animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both infinite; }
+        .system-status { font-family: 'JetBrains Mono', monospace; color: var(--neon-red); font-size: 0.9rem; margin-top: 20px; letter-spacing: 10px; font-weight: bold; text-shadow: 0 0 10px #000; }
 
         @keyframes glitch {
             0% { transform: translate(0); }
@@ -118,16 +110,8 @@
             80% { transform: translate(3px, -3px); }
             100% { transform: translate(0); }
         }
-        @keyframes glitch-anim {
-            0% { transform: translate(0); }
-            33% { transform: translate(-5px, -2px); }
-            66% { transform: translate(5px, 2px); }
-            100% { transform: translate(0); }
-        }
 
-        .system-status { font-family: 'JetBrains Mono', monospace; color: var(--neon-red); font-size: 0.9rem; margin-top: 20px; letter-spacing: 10px; font-weight: bold; text-shadow: 0 0 10px #000; }
-
-        /* --- PORTAL GRID & POSTERS --- */
+        /* --- PORTAL GRID --- */
         .portal-grid {
             display: flex; gap: 20px; padding: 60px 50px;
             width: 95%; max-width: 1500px; perspective: 1000px;
@@ -166,34 +150,35 @@
         .card-inner { transform: skewX(8deg); height: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding: 30px; box-sizing: border-box; position: relative; z-index: 10; }
         .game-title { font-family: 'Barlow Condensed', sans-serif; font-size: 2.2rem; color: white; text-transform: uppercase; line-height: 1; margin: 0; text-shadow: 2px 2px 5px #000; }
 
-        /* --- CLASS PHOTO SECTION --- */
+        /* --- RE-SIZED CLASS PHOTO HEADER --- */
         .class-highlight {
-            width: 90%; max-width: 1400px; margin: 40px 0;
-            position: relative; border: 1px solid #333;
-            overflow: hidden; filter: drop-shadow(0 0 20px rgba(255, 0, 60, 0.1));
+            width: 100%; height: 35vh; /* Header-like height */
+            position: relative; border-top: 2px solid var(--neon-red);
+            border-bottom: 2px solid var(--neon-red);
+            overflow: hidden; margin: 40px 0;
         }
         .class-photo {
-            width: 100%; height: auto; display: block;
-            filter: contrast(1.1) brightness(0.9);
-            transition: transform 0.8s ease;
+            width: 100%; height: 100%; object-fit: cover;
+            filter: contrast(1.1) brightness(0.8) grayscale(0.2);
+            transition: transform 1.2s ease;
         }
-        .class-highlight:hover .class-photo { transform: scale(1.02); }
+        .class-highlight:hover .class-photo { transform: scale(1.05); }
         .class-overlay {
-            position: absolute; bottom: 0; left: 0; width: 100%;
-            padding: 40px; background: linear-gradient(transparent, rgba(0,0,0,0.9));
-            box-sizing: border-box;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: rgba(0,0,0,0.4); 
+            text-align: center;
         }
         .class-tag { 
             font-family: 'JetBrains Mono', monospace; color: var(--neon-red); 
-            background: rgba(255, 0, 60, 0.1); padding: 5px 15px; 
-            border-left: 3px solid var(--neon-red); font-size: 0.8rem;
+            background: rgba(0, 0, 0, 0.8); padding: 5px 20px; 
+            border: 1px solid var(--neon-red); font-size: 0.9rem;
+            letter-spacing: 5px; text-transform: uppercase;
         }
 
-        /* --- INFO BOX --- */
+        /* --- INFO & TICKER --- */
         .info-section-bottom { width: 90%; max-width: 1400px; margin: 20px 0 120px 0; }
         .info-box { background: rgba(10, 10, 10, 0.8); border-left: 4px solid var(--neon-red); padding: 40px; font-family: 'JetBrains Mono', monospace; font-size: 1rem; line-height: 1.8; width: 100%; box-sizing: border-box; }
-
-        /* --- TICKER --- */
         .news-ticker { position: fixed; bottom: 0; width: 100%; background: var(--neon-red); color: black; padding: 12px 0; font-family: 'JetBrains Mono', monospace; font-weight: 900; z-index: 1000; overflow: hidden; }
         .ticker-content { display: inline-block; animation: scroll 25s linear infinite; white-space: nowrap; }
         
@@ -228,33 +213,25 @@
     <div class="portal-grid">
         <a href="gamepage.html?game=knightfall" class="tekken-card" onmouseenter="playHover(this)" onmouseleave="stopPreview(this)">
             <div class="card-poster" style="background-image: url('knightfallposter.jfif');"></div>
-            <div class="card-video-container">
-                <video muted loop playsinline><source src="Knightfallprev.mp4" type="video/mp4"></video>
-            </div>
+            <div class="card-video-container"><video muted loop playsinline><source src="Knightfallprev.mp4" type="video/mp4"></video></div>
             <div class="card-inner"><div class="game-title">KNIGHTFALL:<br>RECLAIMING COC</div></div>
         </a>
 
         <a href="gamepage.html?game=lasthope" class="tekken-card" onmouseenter="playHover(this)" onmouseleave="stopPreview(this)">
             <div class="card-poster" style="background-image: url('hopeposter.png');"></div>
-            <div class="card-video-container">
-                <video muted loop playsinline><source src="Lasthope.mp4" type="video/mp4"></video>
-            </div>
+            <div class="card-video-container"><video muted loop playsinline><source src="Lasthope.mp4" type="video/mp4"></video></div>
             <div class="card-inner"><div class="game-title">THE LAST HOPE</div></div>
         </a>
 
         <a href="gamepage.html?game=deadstreet" class="tekken-card" onmouseenter="playHover(this)" onmouseleave="stopPreview(this)">
             <div class="card-poster" style="background-image: url('deadstreetposter.jpg');"></div>
-            <div class="card-video-container">
-                <video muted loop playsinline><source src="deadstreet.mp4" type="video/mp4"></video>
-            </div>
+            <div class="card-video-container"><video muted loop playsinline><source src="deadstreet.mp4" type="video/mp4"></video></div>
             <div class="card-inner"><div class="game-title">THE DEAD STREET</div></div>
         </a>
 
         <a href="gamepage.html?game=recmar" class="tekken-card" onmouseenter="playHover(this)" onmouseleave="stopPreview(this)">
             <div class="card-poster" style="background-image: url('recmarposter.jpg');"></div>
-            <div class="card-video-container">
-                <video muted loop playsinline><source src="Recmar.mp4" type="video/mp4"></video>
-            </div>
+            <div class="card-video-container"><video muted loop playsinline><source src="Recmar.mp4" type="video/mp4"></video></div>
             <div class="card-inner"><div class="game-title">RECMAR:<br>HARI NG MANOK</div></div>
         </a>
     </div>
@@ -263,7 +240,7 @@
         <img src="gamedevexpo.jpg" class="class-photo" alt="Game Dev Expo 2026">
         <div class="class-overlay">
             <span class="class-tag">OFFICIAL_SNAPSHOT // EXPO_2026</span>
-            <h2 style="font-family: 'Barlow Condensed'; margin: 10px 0 0 0; font-size: 2.5rem; font-style: italic;">HIGHLIGHTS: OUR CLASS</h2>
+            <h2 style="font-family: 'Barlow Condensed'; margin: 15px 0 0 0; font-size: 3rem; font-style: italic; text-shadow: 0 0 20px var(--neon-red);">OUR CLASS HIGHLIGHTS</h2>
         </div>
     </div>
 
@@ -294,9 +271,8 @@
         music.volume = 0.4; 
 
         window.addEventListener('load', () => {
-            // Force play all header videos to ensure smooth transitions
             const headerVideos = document.querySelectorAll('.slide-video');
-            headerVideos.forEach(v => v.play().catch(e => console.log("Header Video play blocked until interaction")));
+            headerVideos.forEach(v => v.play().catch(e => {}));
 
             setTimeout(() => {
                 const splash = document.getElementById('splash-screen');
@@ -307,7 +283,7 @@
 
         function toggleAudio() {
             if (isMuted) {
-                music.play().catch(e => console.log("Audio play blocked"));
+                music.play().catch(e => {});
                 audioBtn.innerHTML = "[ SOUND_ON ]";
                 isMuted = false;
             } else {

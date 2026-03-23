@@ -56,7 +56,7 @@
             box-shadow: 0 0 10px var(--neon-red);
         }
 
-        /* --- STAGE HEADER & GLITCH --- */
+        /* --- STAGE HEADER & CYCLING VIDEOS --- */
         .stage-header {
             width: 100%; height: 45vh; position: relative;
             display: flex; justify-content: center; align-items: center;
@@ -64,22 +64,32 @@
         }
         .slideshow-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
         
-        /* Video Slide Styles */
         .slide-video {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; opacity: 0; filter: brightness(0.5) contrast(1.2);
-            animation: slideFade 10s infinite;
+            object-fit: cover; opacity: 0; filter: brightness(0.4) contrast(1.2);
+            animation: slideFade 20s infinite; /* Increased time for 4 videos */
         }
+
+        /* 20s total / 4 videos = 5s each. 25% represents one full cycle stage */
+        .slide-video:nth-child(1) { animation-delay: 0s; }
+        .slide-video:nth-child(2) { animation-delay: 5s; }
+        .slide-video:nth-child(3) { animation-delay: 10s; }
+        .slide-video:nth-child(4) { animation-delay: 15s; }
+        
+        @keyframes slideFade { 
+            0% { opacity: 0; } 
+            5% { opacity: 0.7; } 
+            25% { opacity: 0.7; } 
+            30% { opacity: 0; } 
+            100% { opacity: 0; } 
+        }
+
         .slideshow-container::after { 
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             background: var(--neon-red); mix-blend-mode: color; opacity: 0.2; z-index: 2; 
         }
-        .slide-video:nth-child(2) { animation-delay: 5s; }
-        
-        @keyframes slideFade { 0% { opacity: 0; } 10% { opacity: 0.8; } 50% { opacity: 0.8; } 60% { opacity: 0; } 100% { opacity: 0; } }
 
-        .header-content { position: relative; z-index: 5; text-align: center; }
-        
+        .header-content { position: relative; z-index: 5; text-align: center; pointer-events: none;}
         .header-content h1 { 
             font-size: clamp(3rem, 12vw, 7.5rem); 
             font-style: italic; 
@@ -90,9 +100,10 @@
             text-shadow: 6px 6px 0px var(--neon-red), 0 0 30px rgba(0,0,0,0.8); 
             letter-spacing: -2px; 
             position: relative;
+            pointer-events: auto;
         }
 
-        /* Glitch Effect on Hover */
+        /* Glitch Effect */
         .header-content h1:hover { animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite; }
         .header-content h1::before, .header-content h1::after {
             content: "PUERTO PORTAL"; position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.8; display: none;
@@ -130,7 +141,6 @@
             transition: transform 0.5s var(--gentle-bounce), flex 0.5s var(--gentle-bounce), border-color 0.3s;
         }
         
-        /* Video Preview Styles */
         .card-video-container {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             opacity: 0; transition: opacity 0.4s ease;
@@ -138,8 +148,8 @@
         }
         .card-video-container video {
             width: 100%; height: 100%; object-fit: cover;
-            transform: skewX(8deg) scale(1.2); /* Counter-skew and zoom */
-            filter: brightness(0.6) saturate(1.2);
+            transform: skewX(8deg) scale(1.2); 
+            filter: brightness(0.7) saturate(1.2);
         }
         .tekken-card:hover .card-video-container { opacity: 1; }
         .tekken-card:hover { flex: 2.2; transform: skewX(-8deg) scale(1.05) translateY(-10px); border-color: var(--neon-red); z-index: 99; box-shadow: 0 10px 50px rgba(255, 0, 60, 0.4); }
@@ -172,12 +182,10 @@
 
     <header class="stage-header">
         <div class="slideshow-container">
-            <video class="slide-video" autoplay muted loop>
-                <source src="Knightfallprev.mp4" type="video/mp4">
-            </video>
-            <video class="slide-video" autoplay muted loop>
-                <source src="Lasthope.mp4" type="video/mp4">
-            </video>
+            <video class="slide-video" autoplay muted loop playsinline><source src="Knightfallprev.mp4" type="video/mp4"></video>
+            <video class="slide-video" autoplay muted loop playsinline><source src="Recmar.mp4" type="video/mp4"></video>
+            <video class="slide-video" autoplay muted loop playsinline><source src="deadstreet.mp4" type="video/mp4"></video>
+            <video class="slide-video" autoplay muted loop playsinline><source src="Lasthope.mp4" type="video/mp4"></video>
         </div>
         <div class="header-content">
             <h1>PUERTO PORTAL</h1>
@@ -188,36 +196,28 @@
     <div class="portal-grid">
         <a href="gamepage.html?game=knightfall" class="tekken-card" onmouseenter="playHover(this)" onmouseleave="stopPreview(this)">
             <div class="card-video-container">
-                <video muted loop playsinline>
-                    <source src="Knightfallprev.mp4" type="video/mp4">
-                </video>
+                <video muted loop playsinline><source src="Knightfallprev.mp4" type="video/mp4"></video>
             </div>
             <div class="card-inner"><div class="game-title">KNIGHTFALL:<br>RECLAIMING COC</div></div>
         </a>
 
         <a href="gamepage.html?game=lasthope" class="tekken-card" onmouseenter="playHover(this)" onmouseleave="stopPreview(this)">
             <div class="card-video-container">
-                <video muted loop playsinline>
-                    <source src="Lasthope.mp4" type="video/mp4">
-                </video>
+                <video muted loop playsinline><source src="Lasthope.mp4" type="video/mp4"></video>
             </div>
             <div class="card-inner"><div class="game-title">THE LAST HOPE</div></div>
         </a>
 
         <a href="gamepage.html?game=deadstreet" class="tekken-card" onmouseenter="playHover(this)" onmouseleave="stopPreview(this)">
             <div class="card-video-container">
-                <video muted loop playsinline>
-                    <source src="deadstreet.mp4" type="video/mp4">
-                </video>
+                <video muted loop playsinline><source src="deadstreet.mp4" type="video/mp4"></video>
             </div>
             <div class="card-inner"><div class="game-title">THE DEAD STREET</div></div>
         </a>
 
         <a href="gamepage.html?game=recmar" class="tekken-card" onmouseenter="playHover(this)" onmouseleave="stopPreview(this)">
             <div class="card-video-container">
-                <video muted loop playsinline>
-                    <source src="Recmar.mp4" type="video/mp4">
-                </video>
+                <video muted loop playsinline><source src="Recmar.mp4" type="video/mp4"></video>
             </div>
             <div class="card-inner"><div class="game-title">RECMAR:<br>HARI NG MANOK</div></div>
         </a>
@@ -237,12 +237,8 @@
         </div>
     </div>
 
-    <audio id="bgMusic" loop>
-        <source src="homepage.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="hoverSound" preload="auto">
-        <source src="SELECTION.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="bgMusic" loop><source src="homepage.mp3" type="audio/mpeg"></audio>
+    <audio id="hoverSound" preload="auto"><source src="SELECTION.mp3" type="audio/mpeg"></audio>
 
     <script>
         const sound = document.getElementById("hoverSound");
@@ -277,20 +273,16 @@
             music.volume = e.target.value;
         });
 
-        // Hover SFX + Start Video Preview
         function playHover(card) {
-            // Play sound effect
             if (!isMuted && sound) {
                 sound.pause();
                 sound.currentTime = 0;
                 sound.play().catch(e => {});
             }
-            // Play the specific video inside the card
             const vid = card.querySelector('video');
             if (vid) vid.play();
         }
 
-        // Stop Video Preview on Mouse Leave
         function stopPreview(card) {
             const vid = card.querySelector('video');
             if (vid) {

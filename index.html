@@ -67,10 +67,9 @@
         .slide-video {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             object-fit: cover; opacity: 0; filter: brightness(0.4) contrast(1.2);
-            animation: slideFade 20s infinite; /* Increased time for 4 videos */
+            animation: slideFade 20s infinite;
         }
 
-        /* 20s total / 4 videos = 5s each. 25% represents one full cycle stage */
         .slide-video:nth-child(1) { animation-delay: 0s; }
         .slide-video:nth-child(2) { animation-delay: 5s; }
         .slide-video:nth-child(3) { animation-delay: 10s; }
@@ -128,7 +127,7 @@
 
         .system-status { font-family: 'JetBrains Mono', monospace; color: var(--neon-red); font-size: 0.9rem; margin-top: 20px; letter-spacing: 10px; font-weight: bold; text-shadow: 0 0 10px #000; }
 
-        /* --- PORTAL GRID --- */
+        /* --- PORTAL GRID & POSTERS --- */
         .portal-grid {
             display: flex; gap: 20px; padding: 60px 50px;
             width: 95%; max-width: 1500px; perspective: 1000px;
@@ -140,22 +139,55 @@
             overflow: hidden; transform: skewX(-8deg); 
             transition: transform 0.5s var(--gentle-bounce), flex 0.5s var(--gentle-bounce), border-color 0.3s;
         }
+
+        .card-poster {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            z-index: 1; transition: opacity 0.5s ease;
+            transform: skewX(8deg) scale(1.1);
+            filter: grayscale(0.4) brightness(0.7);
+        }
         
         .card-video-container {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             opacity: 0; transition: opacity 0.4s ease;
-            z-index: 1; overflow: hidden;
+            z-index: 2; overflow: hidden;
         }
         .card-video-container video {
             width: 100%; height: 100%; object-fit: cover;
             transform: skewX(8deg) scale(1.2); 
-            filter: brightness(0.7) saturate(1.2);
+            filter: brightness(0.8) saturate(1.2);
         }
-        .tekken-card:hover .card-video-container { opacity: 1; }
+
         .tekken-card:hover { flex: 2.2; transform: skewX(-8deg) scale(1.05) translateY(-10px); border-color: var(--neon-red); z-index: 99; box-shadow: 0 10px 50px rgba(255, 0, 60, 0.4); }
+        .tekken-card:hover .card-poster { opacity: 0; }
+        .tekken-card:hover .card-video-container { opacity: 1; }
         
-        .card-inner { transform: skewX(8deg); height: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding: 30px; box-sizing: border-box; position: relative; z-index: 2; }
+        .card-inner { transform: skewX(8deg); height: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding: 30px; box-sizing: border-box; position: relative; z-index: 10; }
         .game-title { font-family: 'Barlow Condensed', sans-serif; font-size: 2.2rem; color: white; text-transform: uppercase; line-height: 1; margin: 0; text-shadow: 2px 2px 5px #000; }
+
+        /* --- CLASS PHOTO SECTION --- */
+        .class-highlight {
+            width: 90%; max-width: 1400px; margin: 40px 0;
+            position: relative; border: 1px solid #333;
+            overflow: hidden; filter: drop-shadow(0 0 20px rgba(255, 0, 60, 0.1));
+        }
+        .class-photo {
+            width: 100%; height: auto; display: block;
+            filter: contrast(1.1) brightness(0.9);
+            transition: transform 0.8s ease;
+        }
+        .class-highlight:hover .class-photo { transform: scale(1.02); }
+        .class-overlay {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            padding: 40px; background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            box-sizing: border-box;
+        }
+        .class-tag { 
+            font-family: 'JetBrains Mono', monospace; color: var(--neon-red); 
+            background: rgba(255, 0, 60, 0.1); padding: 5px 15px; 
+            border-left: 3px solid var(--neon-red); font-size: 0.8rem;
+        }
 
         /* --- INFO BOX --- */
         .info-section-bottom { width: 90%; max-width: 1400px; margin: 20px 0 120px 0; }
@@ -195,6 +227,7 @@
 
     <div class="portal-grid">
         <a href="gamepage.html?game=knightfall" class="tekken-card" onmouseenter="playHover(this)" onmouseleave="stopPreview(this)">
+            <div class="card-poster" style="background-image: url('knightfallposter.jfif');"></div>
             <div class="card-video-container">
                 <video muted loop playsinline><source src="Knightfallprev.mp4" type="video/mp4"></video>
             </div>
@@ -202,6 +235,7 @@
         </a>
 
         <a href="gamepage.html?game=lasthope" class="tekken-card" onmouseenter="playHover(this)" onmouseleave="stopPreview(this)">
+            <div class="card-poster" style="background-image: url('hopeposter.png');"></div>
             <div class="card-video-container">
                 <video muted loop playsinline><source src="Lasthope.mp4" type="video/mp4"></video>
             </div>
@@ -209,6 +243,7 @@
         </a>
 
         <a href="gamepage.html?game=deadstreet" class="tekken-card" onmouseenter="playHover(this)" onmouseleave="stopPreview(this)">
+            <div class="card-poster" style="background-image: url('deadstreetposter.jpg');"></div>
             <div class="card-video-container">
                 <video muted loop playsinline><source src="deadstreet.mp4" type="video/mp4"></video>
             </div>
@@ -216,11 +251,20 @@
         </a>
 
         <a href="gamepage.html?game=recmar" class="tekken-card" onmouseenter="playHover(this)" onmouseleave="stopPreview(this)">
+            <div class="card-poster" style="background-image: url('recmarposter.jpg');"></div>
             <div class="card-video-container">
                 <video muted loop playsinline><source src="Recmar.mp4" type="video/mp4"></video>
             </div>
             <div class="card-inner"><div class="game-title">RECMAR:<br>HARI NG MANOK</div></div>
         </a>
+    </div>
+
+    <div class="class-highlight">
+        <img src="gamedevexpo.jpg" class="class-photo" alt="Game Dev Expo 2026">
+        <div class="class-overlay">
+            <span class="class-tag">OFFICIAL_SNAPSHOT // EXPO_2026</span>
+            <h2 style="font-family: 'Barlow Condensed'; margin: 10px 0 0 0; font-size: 2.5rem; font-style: italic;">HIGHLIGHTS: OUR CLASS</h2>
+        </div>
     </div>
 
     <div class="info-section-bottom">
@@ -250,6 +294,10 @@
         music.volume = 0.4; 
 
         window.addEventListener('load', () => {
+            // Force play all header videos to ensure smooth transitions
+            const headerVideos = document.querySelectorAll('.slide-video');
+            headerVideos.forEach(v => v.play().catch(e => console.log("Header Video play blocked until interaction")));
+
             setTimeout(() => {
                 const splash = document.getElementById('splash-screen');
                 splash.style.opacity = '0';

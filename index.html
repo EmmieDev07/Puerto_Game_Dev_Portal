@@ -62,23 +62,24 @@
             display: flex; justify-content: center; align-items: center;
             border-bottom: 5px solid var(--neon-red); overflow: hidden; background: #000;
         }
-        .slideshow-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-        .slide {
+        .slideshow-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        
+        /* Video Slide Styles */
+        .slide-video {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; opacity: 0; filter: brightness(0.7) contrast(1.1);
+            object-fit: cover; opacity: 0; filter: brightness(0.5) contrast(1.2);
             animation: slideFade 10s infinite;
         }
         .slideshow-container::after { 
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            background: var(--neon-red); mix-blend-mode: color; opacity: 0.3; z-index: 2; 
+            background: var(--neon-red); mix-blend-mode: color; opacity: 0.2; z-index: 2; 
         }
-        .slide:nth-child(2) { animation-delay: 5s; }
+        .slide-video:nth-child(2) { animation-delay: 5s; }
         
-        @keyframes slideFade { 0% { opacity: 0; } 10% { opacity: 0.6; } 50% { opacity: 0.6; } 60% { opacity: 0; } 100% { opacity: 0; } }
+        @keyframes slideFade { 0% { opacity: 0; } 10% { opacity: 0.8; } 50% { opacity: 0.8; } 60% { opacity: 0; } 100% { opacity: 0; } }
 
         .header-content { position: relative; z-index: 5; text-align: center; }
         
-        /* RESTORED H1 WITH ADDED GLITCH LOGIC */
         .header-content h1 { 
             font-size: clamp(3rem, 12vw, 7.5rem); 
             font-style: italic; 
@@ -89,39 +90,15 @@
             text-shadow: 6px 6px 0px var(--neon-red), 0 0 30px rgba(0,0,0,0.8); 
             letter-spacing: -2px; 
             position: relative;
-            cursor: default;
         }
 
         /* Glitch Effect on Hover */
-        .header-content h1:hover {
-            animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+        .header-content h1:hover { animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite; }
+        .header-content h1::before, .header-content h1::after {
+            content: "PUERTO PORTAL"; position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.8; display: none;
         }
-
-        .header-content h1::before,
-        .header-content h1::after {
-            content: "PUERTO PORTAL";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.8;
-            display: none;
-        }
-
-        .header-content h1:hover::before {
-            display: block;
-            color: #0ff;
-            z-index: -1;
-            animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) reverse both infinite;
-        }
-
-        .header-content h1:hover::after {
-            display: block;
-            color: var(--neon-red);
-            z-index: -2;
-            animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
-        }
+        .header-content h1:hover::before { display: block; color: #0ff; z-index: -1; animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) reverse both infinite; }
+        .header-content h1:hover::after { display: block; color: var(--neon-red); z-index: -2; animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both infinite; }
 
         @keyframes glitch {
             0% { transform: translate(0); }
@@ -131,7 +108,6 @@
             80% { transform: translate(3px, -3px); }
             100% { transform: translate(0); }
         }
-
         @keyframes glitch-anim {
             0% { transform: translate(0); }
             33% { transform: translate(-5px, -2px); }
@@ -153,15 +129,19 @@
             overflow: hidden; transform: skewX(-8deg); 
             transition: transform 0.5s var(--gentle-bounce), flex 0.5s var(--gentle-bounce), border-color 0.3s;
         }
-        .card-preview-gif {
+        
+        /* Video Preview Styles */
+        .card-video-container {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-size: cover; background-position: center;
             opacity: 0; transition: opacity 0.4s ease;
-            transform: skewX(8deg) scale(1.2); 
-            filter: brightness(0.6) saturate(1.2);
-            z-index: 1;
+            z-index: 1; overflow: hidden;
         }
-        .tekken-card:hover .card-preview-gif { opacity: 1; }
+        .card-video-container video {
+            width: 100%; height: 100%; object-fit: cover;
+            transform: skewX(8deg) scale(1.2); /* Counter-skew and zoom */
+            filter: brightness(0.6) saturate(1.2);
+        }
+        .tekken-card:hover .card-video-container { opacity: 1; }
         .tekken-card:hover { flex: 2.2; transform: skewX(-8deg) scale(1.05) translateY(-10px); border-color: var(--neon-red); z-index: 99; box-shadow: 0 10px 50px rgba(255, 0, 60, 0.4); }
         
         .card-inner { transform: skewX(8deg); height: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding: 30px; box-sizing: border-box; position: relative; z-index: 2; }
@@ -192,8 +172,12 @@
 
     <header class="stage-header">
         <div class="slideshow-container">
-            <img class="slide" src="https://media0.giphy.com/media/v1.Y2lkPTZjMDliOTUyeTBldmVldzBuaTdmd2xzc3ZhdXc0ZTZ2YWFhdzN5d3Bjcjk2cWx1MCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/HIlTmfpYApLVThFsdS/giphy.gif">
-            <img class="slide" src="https://64.media.tumblr.com/973d80ed127b451df18e94103b16d0b6/tumblr_oop4jgf1bM1qciqqno1_500.gif">
+            <video class="slide-video" autoplay muted loop>
+                <source src="Knightfallprev.mp4" type="video/mp4">
+            </video>
+            <video class="slide-video" autoplay muted loop>
+                <source src="Lasthope.mp4" type="video/mp4">
+            </video>
         </div>
         <div class="header-content">
             <h1>PUERTO PORTAL</h1>
@@ -202,20 +186,39 @@
     </header>
 
     <div class="portal-grid">
-        <a href="gamepage.html?game=knightfall" class="tekken-card" onmouseenter="playHover()">
-            <div class="card-preview-gif" style="background-image: url('https://media0.giphy.com/media/v1.Y2lkPTZjMDliOTUyeTBldmVldzBuaTdmd2xzc3ZhdXc0ZTZ2YWFhdzN5d3Bjcjk2cWx1MCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/HIlTmfpYApLVThFsdS/giphy.gif');"></div>
+        <a href="gamepage.html?game=knightfall" class="tekken-card" onmouseenter="playHover(this)" onmouseleave="stopPreview(this)">
+            <div class="card-video-container">
+                <video muted loop playsinline>
+                    <source src="Knightfallprev.mp4" type="video/mp4">
+                </video>
+            </div>
             <div class="card-inner"><div class="game-title">KNIGHTFALL:<br>RECLAIMING COC</div></div>
         </a>
-        <a href="gamepage.html?game=lasthope" class="tekken-card" onmouseenter="playHover()">
-            <div class="card-preview-gif" style="background-image: url('https://64.media.tumblr.com/973d80ed127b451df18e94103b16d0b6/tumblr_oop4jgf1bM1qciqqno1_500.gif');"></div>
+
+        <a href="gamepage.html?game=lasthope" class="tekken-card" onmouseenter="playHover(this)" onmouseleave="stopPreview(this)">
+            <div class="card-video-container">
+                <video muted loop playsinline>
+                    <source src="Lasthope.mp4" type="video/mp4">
+                </video>
+            </div>
             <div class="card-inner"><div class="game-title">THE LAST HOPE</div></div>
         </a>
-        <a href="gamepage.html?game=deadstreet" class="tekken-card" onmouseenter="playHover()">
-            <div class="card-preview-gif" style="background-image: url('https://media0.giphy.com/media/v1.Y2lkPTZjMDliOTUyeTBldmVldzBuaTdmd2xzc3ZhdXc0ZTZ2YWFhdzN5d3Bjcjk2cWx1MCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/HIlTmfpYApLVThFsdS/giphy.gif');"></div>
+
+        <a href="gamepage.html?game=deadstreet" class="tekken-card" onmouseenter="playHover(this)" onmouseleave="stopPreview(this)">
+            <div class="card-video-container">
+                <video muted loop playsinline>
+                    <source src="deadstreet.mp4" type="video/mp4">
+                </video>
+            </div>
             <div class="card-inner"><div class="game-title">THE DEAD STREET</div></div>
         </a>
-        <a href="gamepage.html?game=recmar" class="tekken-card" onmouseenter="playHover()">
-            <div class="card-preview-gif" style="background-image: url('https://64.media.tumblr.com/973d80ed127b451df18e94103b16d0b6/tumblr_oop4jgf1bM1qciqqno1_500.gif');"></div>
+
+        <a href="gamepage.html?game=recmar" class="tekken-card" onmouseenter="playHover(this)" onmouseleave="stopPreview(this)">
+            <div class="card-video-container">
+                <video muted loop playsinline>
+                    <source src="Recmar.mp4" type="video/mp4">
+                </video>
+            </div>
             <div class="card-inner"><div class="game-title">RECMAR:<br>HARI NG MANOK</div></div>
         </a>
     </div>
@@ -250,7 +253,6 @@
 
         music.volume = 0.4; 
 
-        // Splash Screen Logic
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const splash = document.getElementById('splash-screen');
@@ -259,10 +261,9 @@
             }, 3000);
         });
 
-        // Audio Toggle Logic
         function toggleAudio() {
             if (isMuted) {
-                music.play().catch(e => console.log("Audio play blocked by browser"));
+                music.play().catch(e => console.log("Audio play blocked"));
                 audioBtn.innerHTML = "[ SOUND_ON ]";
                 isMuted = false;
             } else {
@@ -272,17 +273,29 @@
             }
         }
 
-        // Real-time Volume Adjustment
         volumeSlider.addEventListener("input", (e) => {
             music.volume = e.target.value;
         });
 
-        // Hover SFX Execution
-        function playHover() {
+        // Hover SFX + Start Video Preview
+        function playHover(card) {
+            // Play sound effect
             if (!isMuted && sound) {
                 sound.pause();
                 sound.currentTime = 0;
                 sound.play().catch(e => {});
+            }
+            // Play the specific video inside the card
+            const vid = card.querySelector('video');
+            if (vid) vid.play();
+        }
+
+        // Stop Video Preview on Mouse Leave
+        function stopPreview(card) {
+            const vid = card.querySelector('video');
+            if (vid) {
+                vid.pause();
+                vid.currentTime = 0;
             }
         }
     </script>

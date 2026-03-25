@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>REDLINE // DATA_FEED // KNIGHTFALL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root { --red: #ff003c; --black: #050505; }
+        body { 
+            margin: 0; background: var(--black); color: white; 
+            font-family: 'JetBrains Mono', monospace;
+            display: flex; height: 100vh; overflow: hidden;
+        }
+
+        /* --- Left Side: Visual Feed --- */
+        .visual-feed {
+            flex: 1.2; border-right: 2px solid var(--red);
+            position: relative; overflow: hidden;
+            background: #000;
+        }
+
+        #game-video {
+            width: 100%; height: 100%; object-fit: cover;
+            opacity: 0.8; filter: contrast(1.2) brightness(0.9);
+        }
+
+        .scan-line {
+            position: absolute; top: 0; width: 100%; height: 4px;
+            background: linear-gradient(to bottom, transparent, var(--red), transparent);
+            z-index: 10;
+            animation: scan 3s linear infinite;
+        }
+
+        @keyframes scan { 0% { top: -10%; } 100% { top: 110%; } }
+
+        /* --- Right Side: Data Feed --- */
+        .data-feed {
+            flex: 1; padding: 60px; display: flex; flex-direction: column;
+            background: linear-gradient(135deg, #0f0003 0%, #050505 100%);
+            overflow-y: auto;
+        }
+
+        .game-header { border-left: 8px solid var(--red); padding-left: 20px; margin-bottom: 40px; }
+        .game-header h2 { font-family: 'Orbitron'; font-size: 2.8rem; margin: 0; text-transform: uppercase; letter-spacing: 4px; color: #fff; text-shadow: 0 0 15px var(--red); }
+        
+        .spec-box {
+            background: rgba(255, 0, 60, 0.05);
+            border: 1px solid rgba(255, 0, 60, 0.2); padding: 30px;
+            position: relative; margin-bottom: 20px;
+        }
+        .spec-box::before {
+            content: "CORE_SYSTEM_OVERRIDE"; position: absolute; top: -10px; left: 10px;
+            background: #0f0003; color: var(--red); font-size: 0.7rem; padding: 0 10px; border: 1px solid var(--red);
+        }
+
+        .info-label { color: var(--red); font-size: 0.75rem; margin-top: 18px; display: block; letter-spacing: 3px; font-weight: 900; }
+        .info-value { font-weight: bold; font-size: 0.95rem; margin-bottom: 12px; line-height: 1.5; }
+        .dev-list { font-size: 0.85rem; color: #eee; margin-top: 6px; padding-bottom: 4px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .dev-list b { color: var(--red); text-transform: uppercase; }
+        .role { color: #888; font-size: 0.75rem; margin-left: 5px; }
+
+        .btn-container { margin-top: auto; padding-top: 25px; }
+        .play-btn {
+            display: block; width: 100%; padding: 25px; background: var(--red);
+            border: none; color: white; font-family: 'Orbitron';
+            font-size: 1.3rem; font-weight: 900; cursor: pointer;
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+            transition: 0.4s; text-align: center; text-decoration: none;
+            box-shadow: 0 0 20px rgba(255, 0, 60, 0.3);
+        }
+
+        .play-btn:hover { background: #fff; color: var(--red); letter-spacing: 8px; box-shadow: 0 0 40px var(--red); transform: scale(1.02); }
+
+        .back-link {
+            display: inline-block; margin-top: 25px; color: #444; 
+            text-decoration: none; font-size: 0.85rem; letter-spacing: 2px;
+        }
+        .back-link:hover { color: var(--red); text-shadow: 0 0 5px var(--red); }
+    </style>
+</head>
+<body>
+
+    <div class="visual-feed">
+        <div class="scan-line"></div>
+        <video id="game-video" autoplay muted loop playsinline>
+            <source src="Knightfallprev.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="data-feed">
+        <div class="game-header">
+            <h2 id="title">KNIGHTFALL</h2>
+            <p id="subtitle" style="color:var(--red); margin: 5px 0 0 0; font-weight: bold;">RECLAIMING_COC // VERSION_FINAL</p>
+        </div>
+
+        <div class="spec-box">
+            <span class="info-label">PROJECT_LEAD</span>
+            <div class="info-value">
+                <div class="dev-list"><b>Binongo, Emmie</b> <span class="role">[LEAD_DEV / ART / SOUND / SFX]</span></div>
+            </div>
+
+            <span class="info-label">STRATEGIC_OPERATIVES</span>
+            <div class="info-value">
+                <div class="dev-list"><b>Pajara, Jester</b> <span class="role">[CO_DEV / MAP / TECH_DESIGN]</span></div>
+                <div class="dev-list"><b>Olarita, Nino</b> <span class="role">[CO_DEV / MAP / STAGE_DESIGN]</span></div>
+                <div class="dev-list"><b>Zayas, Anna</b> <span class="role">[CO_DEV / WEB_DESIGN]</span></div>
+            </div>
+
+            <span class="info-label">ENVIRONMENT_ARTISTS</span>
+            <div class="info-value">
+                <div class="dev-list"><b>Waslo, Jorge</b></div>
+                <div class="dev-list"><b>Veloso, Feliper</b></div>
+            </div>
+
+            <span class="info-label">MISSION_OBJECTIVE</span>
+            <div id="desc" class="info-value">When a Knight falls, it is only the beginning. Breach the Main Campus to reverse the monster's curse and purge the corruption. Reclaim COC.</div>
+        </div>
+
+        <div class="btn-container">
+            <a href="https://play.unity.com/en/games/e6fc6c45-fa39-4af0-a018-757d871b32b0/knightfall" target="_blank" class="play-btn">EXECUTE_GAME</a>
+            <a href="index.html" class="back-link">_RETURN_TO_HUB</a>
+        </div>
+    </div>
+
+</body>
+</html>

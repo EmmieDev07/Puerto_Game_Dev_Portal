@@ -25,29 +25,13 @@
         }
 
         /* --- SPLASH SCREEN --- */
-      /* --- SPLASH SCREEN UPGRADE --- */
-#splash-screen {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: #000; z-index: 5000; display: flex; 
-    justify-content: center; align-items: center;
-    /* Smoothly fade out the entire screen */
-    transition: opacity 0.8s ease, visibility 0.8s;
-}
-
-#splash-logo { 
-    width: 450px; 
-    opacity: 0;
-    transform: scale(0.95);
-    /* Logo fades in and gently grows */
-    animation: splashReveal 1.2s forwards cubic-bezier(0.22, 1, 0.36, 1); 
-}
-
-@keyframes splashReveal {
-    0% { opacity: 0; transform: scale(0.95); filter: blur(10px); }
-    100% { opacity: 1; transform: scale(1); filter: blur(0px); }
-}
-
-/* Remove the old logoPulse keyframes if you want to keep the code clean */}
+        #splash-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 5000; display: flex; 
+            justify-content: center; align-items: center;
+            transition: opacity 1s ease, visibility 1s;
+        }
+        #splash-logo { width: 500px; animation: logoPulse 2s infinite ease-in-out; }
 
         /* --- AUDIO CONTROLS --- */
         .audio-container {
@@ -293,9 +277,7 @@
             setTimeout(() => {
                 const splash = document.getElementById('splash-screen');
                 splash.style.opacity = '0';
-                splash.style.pointerEvents = 'none';
-                
-                setTimeout(() => splash.style.display = 'none', 800);
+                setTimeout(() => splash.style.display = 'none', 1000);
             }, 1500);
         });
 

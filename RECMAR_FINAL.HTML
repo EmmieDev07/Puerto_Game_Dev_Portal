@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>REDLINE // DATA_FEED // RECMAR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root { --red: #ff003c; --black: #050505; }
+        body { 
+            margin: 0; background: var(--black); color: white; 
+            font-family: 'JetBrains Mono', monospace;
+            display: flex; height: 100vh; overflow: hidden;
+        }
+
+        /* --- Left Side: Visual Feed --- */
+        .visual-feed {
+            flex: 1.2; border-right: 2px solid var(--red);
+            position: relative; overflow: hidden;
+            background: #000;
+        }
+
+        #game-video {
+            width: 100%; height: 100%; object-fit: cover;
+            opacity: 0.7; filter: saturate(1.8) contrast(1.2);
+        }
+
+        .scan-line {
+            position: absolute; top: 0; width: 100%; height: 2px;
+            background: rgba(255, 0, 60, 0.4);
+            z-index: 10;
+            animation: scan 2.5s linear infinite;
+        }
+
+        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+
+        /* --- Right Side: Data Feed --- */
+        .data-feed {
+            flex: 1; padding: 60px; display: flex; flex-direction: column;
+            background: linear-gradient(135deg, #0a0002 0%, #050505 100%);
+            overflow-y: auto;
+        }
+
+        .game-header { border-left: 5px solid var(--red); padding-left: 20px; margin-bottom: 40px; }
+        .game-header h2 { font-family: 'Orbitron'; font-size: 2.5rem; margin: 0; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .spec-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid #222; padding: 30px;
+            position: relative; margin-bottom: 20px;
+        }
+        .spec-box::before {
+            content: "HEIST_SIMULATION_LOG"; position: absolute; top: -10px; left: 10px;
+            background: #080001; color: var(--red); font-size: 0.6rem; padding: 0 5px;
+        }
+
+        .info-label { color: var(--red); font-size: 0.7rem; margin-top: 15px; display: block; letter-spacing: 2px; font-weight: bold; }
+        .info-value { font-weight: bold; font-size: 0.9rem; margin-bottom: 10px; line-height: 1.4; }
+        .dev-list { font-size: 0.8rem; color: #bbb; margin-top: 5px; padding-bottom: 4px; border-bottom: 1px solid rgba(255,0,60,0.1); }
+        .dev-list b { color: white; }
+        .role { color: var(--red); font-size: 0.7rem; }
+
+        .btn-container { margin-top: auto; padding-top: 20px; }
+        .play-btn {
+            display: block; width: 100%; padding: 25px; background: var(--red);
+            border: none; color: white; font-family: 'Orbitron';
+            font-size: 1.2rem; font-weight: 900; cursor: pointer;
+            clip-path: polygon(0 0, 100% 0, 93% 100%, 0 100%);
+            transition: 0.3s; text-align: center; text-decoration: none;
+        }
+
+        .play-btn:hover { background: #fff; color: var(--red); letter-spacing: 5px; box-shadow: 0 0 20px var(--red); }
+
+        .back-link {
+            display: inline-block; margin-top: 20px; color: #555; 
+            text-decoration: none; font-size: 0.8rem;
+        }
+        .back-link:hover { color: var(--red); }
+    </style>
+</head>
+<body>
+
+    <div class="visual-feed">
+        <div class="scan-line"></div>
+        <video id="game-video" autoplay muted loop playsinline>
+            <source src="Recmar.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="data-feed">
+        <div class="game-header">
+            <h2 id="title">RECMAR</h2>
+            <p id="subtitle" style="color:var(--red); margin: 5px 0 0 0;">STEALTH_GAME// HARI_NG_MANOK</p>
+        </div>
+
+        <div class="spec-box">
+            <span class="info-label">GAME_DEVELOPERS</span>
+            <div class="info-value">
+                <div class="dev-list"><b>Jerico D. Salvador</b> <span class="role">[DEV / DIRECTOR]</span></div>
+                <div class="dev-list"><b>Larken John Ditan</b> <span class="role">[DEV / CREATIVE / ART / ANIM]</span></div>
+            </div>
+
+            <span class="info-label">CREATIVE_INTEL</span>
+            <div class="info-value">
+                <div class="dev-list"><b>Sryne Isaiah Beltran Macas</b> <span class="role">[STORY_ARTIST]</span></div>
+                <div class="dev-list"><b>Alexandra Faith Barcelon</b> <span class="role">[ENVIRONMENT / MENU_UI]</span></div>
+                <div class="dev-list"><b>Elmer Jing P. Mandaya</b> <span class="role">[TESTER / STORY]</span></div>
+            </div>
+
+            <span class="info-label">MISSION_OBJECTIVE</span>
+            <div id="desc" class="info-value">
+                Want a Recmar simulation? Try this game. Maybe you're an expert in stealing chickens. 
+        
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <a href="https://play.unity.com/api/v1/games/game/38597a93-6123-4866-854f-6d014fbe9e79/build/latest/frame" target="_blank" class="play-btn">EXECUTE_GAME</a>
+        </div>
+        <div class="nav-footer">
+    <a href="index.html" class="hub-btn">
+        _RETURN_TO_GAME_HUB
+    </a>
+
+    <style>
+        .nav-footer {
+            margin-top: 15px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hub-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #333;
+            color: #555;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            text-decoration: none;
+            text-align: center;
+            transition: 0.3s ease;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            /* Inverted clip-path to contrast with the main play button */
+            clip-path: polygon(0 0, 98% 0, 100% 100%, 2% 100%);
+        }
+
+        .hub-btn:hover {
+            border-color: #ff003c; /* Puerto Red */
+            color: #ff003c;
+            background: rgba(255, 0, 60, 0.08);
+            text-shadow: 0 0 10px #ff003c;
+            letter-spacing: 4px; /* Subtle expansion effect */
+        }
+    </style>
+</div>
+    </div>
+
+</body>
+</html>

@@ -1,319 +1,319 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PUERTO_DEV // PORTAL_2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Barlow+Condensed:ital,wght@1,800;1,900&family=JetBrains+Mono&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --neon-red: #ff003c;
-            --white: #ffffff;
-            --bg: #000000;
-            --gentle-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUERTO_DEV // PORTAL_2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Barlow+Condensed:ital,wght@1,800;1,900&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-red: #ff003c;
+            --white: #ffffff;
+            --bg: #000000;
+            --gentle-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
 
-        body {
-            margin: 0; background: var(--bg); color: var(--white);
-            font-family: 'Orbitron', sans-serif;
-            display: flex; flex-direction: column; align-items: center;
-            min-height: 100vh; overflow-x: hidden;
-            background-image: 
-                linear-gradient(rgba(255, 0, 60, 0.03) 1px, transparent 1px), 
-                linear-gradient(90deg, rgba(255, 0, 60, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-        }
+        body {
+            margin: 0; background: var(--bg); color: var(--white);
+            font-family: 'Orbitron', sans-serif;
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh; overflow-x: hidden;
+            background-image: 
+                linear-gradient(rgba(255, 0, 60, 0.03) 1px, transparent 1px), 
+                linear-gradient(90deg, rgba(255, 0, 60, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
 
-        /* --- SPLASH SCREEN --- */
-        #splash-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 5000; display: flex; 
-            justify-content: center; align-items: center;
-            transition: opacity 1s ease, visibility 1s;
-        }
-        #splash-logo { width: 500px; animation: logoPulse 2s infinite ease-in-out; }
+        /* --- SPLASH SCREEN --- */
+        #splash-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 5000; display: flex; 
+            justify-content: center; align-items: center;
+            transition: opacity 1s ease, visibility 1s;
+        }
+        #splash-logo { width: 500px; animation: logoPulse 2s infinite ease-in-out; }
 
-        /* --- AUDIO CONTROLS --- */
-        .audio-container {
-            position: absolute; top: 0; right: 50px;
-            z-index: 110; display: flex; align-items: center; gap: 15px;
-            background: rgba(255, 0, 60, 0.1); border: 1px solid var(--neon-red);
-            padding: 10px 25px;
-            clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
-        }
-        .audio-tab {
-            cursor: pointer; font-family: 'JetBrains Mono', monospace; 
-            font-size: 0.85rem; color: var(--neon-red);
-            font-weight: bold;
-            text-shadow: 0 0 8px var(--neon-red);
-        }
-        
-        input[type=range] { -webkit-appearance: none; background: transparent; width: 90px; }
-        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 3px; background: rgba(255, 0, 60, 0.3); border-radius: 2px; }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none; height: 12px; width: 12px; border-radius: 50%;
-            background: var(--neon-red); cursor: pointer; margin-top: -4px;
-            box-shadow: 0 0 10px var(--neon-red);
-        }
+        /* --- AUDIO CONTROLS --- */
+        .audio-container {
+            position: absolute; top: 0; right: 50px;
+            z-index: 110; display: flex; align-items: center; gap: 15px;
+            background: rgba(255, 0, 60, 0.1); border: 1px solid var(--neon-red);
+            padding: 10px 25px;
+            clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
+        }
+        .audio-tab {
+            cursor: pointer; font-family: 'JetBrains Mono', monospace; 
+            font-size: 0.85rem; color: var(--neon-red);
+            font-weight: bold;
+            text-shadow: 0 0 8px var(--neon-red);
+        }
+        
+        input[type=range] { -webkit-appearance: none; background: transparent; width: 90px; }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 3px; background: rgba(255, 0, 60, 0.3); border-radius: 2px; }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; height: 12px; width: 12px; border-radius: 50%;
+            background: var(--neon-red); cursor: pointer; margin-top: -4px;
+            box-shadow: 0 0 10px var(--neon-red);
+        }
 
-        /* --- STAGE HEADER & SEQUENTIAL VIDEOS --- */
-        .stage-header {
-            width: 100%; height: 45vh; position: relative;
-            display: flex; justify-content: center; align-items: center;
-            border-bottom: 5px solid var(--neon-red); overflow: hidden; background: #000;
-        }
-        .slideshow-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
-        
-        .slide-video {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; opacity: 0; filter: brightness(0.4) contrast(1.2);
-            animation: slideFade 20s infinite;
-        }
+        /* --- STAGE HEADER & SEQUENTIAL VIDEOS --- */
+        .stage-header {
+            width: 100%; height: 45vh; position: relative;
+            display: flex; justify-content: center; align-items: center;
+            border-bottom: 5px solid var(--neon-red); overflow: hidden; background: #000;
+        }
+        .slideshow-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        
+        .slide-video {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; opacity: 0; filter: brightness(0.4) contrast(1.2);
+            animation: slideFade 20s infinite;
+        }
 
-        /* Video sequence: Each video gets exactly 5 seconds of the 20s loop */
-        .slide-video:nth-child(1) { animation-delay: 0s; }
-        .slide-video:nth-child(2) { animation-delay: 5s; }
-        .slide-video:nth-child(3) { animation-delay: 10s; }
-        .slide-video:nth-child(4) { animation-delay: 15s; }
-        
-        @keyframes slideFade { 
-            0% { opacity: 0; } 
-            2% { opacity: 0.7; } /* Quick fade in at start of its turn */
-            23% { opacity: 0.7; } /* Stay solid for most of the 5s */
-            25% { opacity: 0; } /* Fade out right before next video */
-            100% { opacity: 0; } 
-        }
+        /* Video sequence: Each video gets exactly 5 seconds of the 20s loop */
+        .slide-video:nth-child(1) { animation-delay: 0s; }
+        .slide-video:nth-child(2) { animation-delay: 5s; }
+        .slide-video:nth-child(3) { animation-delay: 10s; }
+        .slide-video:nth-child(4) { animation-delay: 15s; }
+        
+        @keyframes slideFade { 
+            0% { opacity: 0; } 
+            2% { opacity: 0.7; } /* Quick fade in at start of its turn */
+            23% { opacity: 0.7; } /* Stay solid for most of the 5s */
+            25% { opacity: 0; } /* Fade out right before next video */
+            100% { opacity: 0; } 
+        }
 
-        .slideshow-container::after { 
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            background: var(--neon-red); mix-blend-mode: color; opacity: 0.2; z-index: 2; 
-        }
+        .slideshow-container::after { 
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            background: var(--neon-red); mix-blend-mode: color; opacity: 0.2; z-index: 2; 
+        }
 
-        .header-content { position: relative; z-index: 5; text-align: center; pointer-events: none;}
-        .header-content h1 { 
-            font-size: clamp(3rem, 12vw, 7.5rem); 
-            font-style: italic; font-weight: 900;
-            text-transform: uppercase; margin: 0; line-height: 0.9; 
-            -webkit-text-stroke: 1px rgba(0,0,0,0.8); 
-            text-shadow: 6px 6px 0px var(--neon-red), 0 0 30px rgba(0,0,0,0.8); 
-            letter-spacing: -2px; position: relative; pointer-events: auto;
-        }
+        .header-content { position: relative; z-index: 5; text-align: center; pointer-events: none;}
+        .header-content h1 { 
+            font-size: clamp(3rem, 12vw, 7.5rem); 
+            font-style: italic; font-weight: 900;
+            text-transform: uppercase; margin: 0; line-height: 0.9; 
+            -webkit-text-stroke: 1px rgba(0,0,0,0.8); 
+            text-shadow: 6px 6px 0px var(--neon-red), 0 0 30px rgba(0,0,0,0.8); 
+            letter-spacing: -2px; position: relative; pointer-events: auto;
+        }
 
-        .header-content h1:hover { animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite; }
-        .system-status { font-family: 'JetBrains Mono', monospace; color: var(--neon-red); font-size: 0.9rem; margin-top: 20px; letter-spacing: 10px; font-weight: bold; text-shadow: 0 0 10px #000; }
+        .header-content h1:hover { animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite; }
+        .system-status { font-family: 'JetBrains Mono', monospace; color: var(--neon-red); font-size: 0.9rem; margin-top: 20px; letter-spacing: 10px; font-weight: bold; text-shadow: 0 0 10px #000; }
 
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-3px, 3px); }
-            40% { transform: translate(-3px, -3px); }
-            60% { transform: translate(3px, 3px); }
-            80% { transform: translate(3px, -3px); }
-            100% { transform: translate(0); }
-        }
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-3px, 3px); }
+            40% { transform: translate(-3px, -3px); }
+            60% { transform: translate(3px, 3px); }
+            80% { transform: translate(3px, -3px); }
+            100% { transform: translate(0); }
+        }
 
-        /* --- PORTAL GRID --- */
-        .portal-grid {
-            display: flex; gap: 20px; padding: 60px 50px;
-            width: 95%; max-width: 1500px; perspective: 1000px;
-        }
-        .tekken-card {
-            flex: 1; height: 500px; 
-            background: rgba(15, 15, 15, 0.9); border: 1px solid #222;
-            position: relative; cursor: pointer; text-decoration: none;
-            overflow: hidden; transform: skewX(-8deg); 
-            transition: transform 0.5s var(--gentle-bounce), flex 0.5s var(--gentle-bounce), border-color 0.3s;
-        }
+        /* --- PORTAL GRID --- */
+        .portal-grid {
+            display: flex; gap: 20px; padding: 60px 50px;
+            width: 95%; max-width: 1500px; perspective: 1000px;
+        }
+        .tekken-card {
+            flex: 1; height: 500px; 
+            background: rgba(15, 15, 15, 0.9); border: 1px solid #222;
+            position: relative; cursor: pointer; text-decoration: none;
+            overflow: hidden; transform: skewX(-8deg); 
+            transition: transform 0.5s var(--gentle-bounce), flex 0.5s var(--gentle-bounce), border-color 0.3s;
+        }
 
-        .card-poster {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-size: cover; background-position: center;
-            z-index: 1; transition: opacity 0.5s ease;
-            transform: skewX(8deg) scale(1.1);
-            filter: grayscale(0.4) brightness(0.7);
-        }
-        
-        .card-video-container {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0; transition: opacity 0.4s ease;
-            z-index: 2; overflow: hidden;
-        }
-        .card-video-container video {
-            width: 100%; height: 100%; object-fit: cover;
-            transform: skewX(8deg) scale(1.2); 
-            filter: brightness(0.8) saturate(1.2);
-        }
+        .card-poster {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            z-index: 1; transition: opacity 0.5s ease;
+            transform: skewX(8deg) scale(1.1);
+            filter: grayscale(0.4) brightness(0.7);
+        }
+        
+        .card-video-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0; transition: opacity 0.4s ease;
+            z-index: 2; overflow: hidden;
+        }
+        .card-video-container video {
+            width: 100%; height: 100%; object-fit: cover;
+            transform: skewX(8deg) scale(1.2); 
+            filter: brightness(0.8) saturate(1.2);
+        }
 
-        .tekken-card:hover { flex: 2.2; transform: skewX(-8deg) scale(1.05) translateY(-10px); border-color: var(--neon-red); z-index: 99; box-shadow: 0 10px 50px rgba(255, 0, 60, 0.4); }
-        .tekken-card:hover .card-poster { opacity: 0; }
-        .tekken-card:hover .card-video-container { opacity: 1; }
-        
-        .card-inner { transform: skewX(8deg); height: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding: 30px; box-sizing: border-box; position: relative; z-index: 10; }
-        .game-title { font-family: 'Barlow Condensed', sans-serif; font-size: 2.2rem; color: white; text-transform: uppercase; line-height: 1; margin: 0; text-shadow: 2px 2px 5px #000; }
+        .tekken-card:hover { flex: 2.2; transform: skewX(-8deg) scale(1.05) translateY(-10px); border-color: var(--neon-red); z-index: 99; box-shadow: 0 10px 50px rgba(255, 0, 60, 0.4); }
+        .tekken-card:hover .card-poster { opacity: 0; }
+        .tekken-card:hover .card-video-container { opacity: 1; }
+        
+        .card-inner { transform: skewX(8deg); height: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding: 30px; box-sizing: border-box; position: relative; z-index: 10; }
+        .game-title { font-family: 'Barlow Condensed', sans-serif; font-size: 2.2rem; color: white; text-transform: uppercase; line-height: 1; margin: 0; text-shadow: 2px 2px 5px #000; }
 
-        /* --- RE-SIZED CLASS PHOTO HEADER --- */
-        .class-highlight {
-            width: 100%; height: 35vh; /* Header-like height */
-            position: relative; border-top: 2px solid var(--neon-red);
-            border-bottom: 2px solid var(--neon-red);
-            overflow: hidden; margin: 40px 0;
-        }
-        .class-photo {
-            width: 100%; height: 100%; object-fit: cover;
-            filter: contrast(1.1) brightness(0.8) grayscale(0.2);
-            transition: transform 1.2s ease;
-        }
-        .class-highlight:hover .class-photo { transform: scale(1.05); }
-        .class-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: rgba(0,0,0,0.4); 
-            text-align: center;
-        }
-        .class-tag { 
-            font-family: 'JetBrains Mono', monospace; color: var(--neon-red); 
-            background: rgba(0, 0, 0, 0.8); padding: 5px 20px; 
-            border: 1px solid var(--neon-red); font-size: 0.9rem;
-            letter-spacing: 5px; text-transform: uppercase;
-        }
+        /* --- RE-SIZED CLASS PHOTO HEADER --- */
+        .class-highlight {
+            width: 100%; height: 35vh; /* Header-like height */
+            position: relative; border-top: 2px solid var(--neon-red);
+            border-bottom: 2px solid var(--neon-red);
+            overflow: hidden; margin: 40px 0;
+        }
+        .class-photo {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: contrast(1.1) brightness(0.8) grayscale(0.2);
+            transition: transform 1.2s ease;
+        }
+        .class-highlight:hover .class-photo { transform: scale(1.05); }
+        .class-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: rgba(0,0,0,0.4); 
+            text-align: center;
+        }
+        .class-tag { 
+            font-family: 'JetBrains Mono', monospace; color: var(--neon-red); 
+            background: rgba(0, 0, 0, 0.8); padding: 5px 20px; 
+            border: 1px solid var(--neon-red); font-size: 0.9rem;
+            letter-spacing: 5px; text-transform: uppercase;
+        }
 
-        /* --- INFO & TICKER --- */
-        .info-section-bottom { width: 90%; max-width: 1400px; margin: 20px 0 120px 0; }
-        .info-box { background: rgba(10, 10, 10, 0.8); border-left: 4px solid var(--neon-red); padding: 40px; font-family: 'JetBrains Mono', monospace; font-size: 1rem; line-height: 1.8; width: 100%; box-sizing: border-box; }
-        .news-ticker { position: fixed; bottom: 0; width: 100%; background: var(--neon-red); color: black; padding: 12px 0; font-family: 'JetBrains Mono', monospace; font-weight: 900; z-index: 1000; overflow: hidden; }
-        .ticker-content { display: inline-block; animation: scroll 25s linear infinite; white-space: nowrap; }
-        
-        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        @keyframes logoPulse { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; } }
-    </style>
+        /* --- INFO & TICKER --- */
+        .info-section-bottom { width: 90%; max-width: 1400px; margin: 20px 0 120px 0; }
+        .info-box { background: rgba(10, 10, 10, 0.8); border-left: 4px solid var(--neon-red); padding: 40px; font-family: 'JetBrains Mono', monospace; font-size: 1rem; line-height: 1.8; width: 100%; box-sizing: border-box; }
+        .news-ticker { position: fixed; bottom: 0; width: 100%; background: var(--neon-red); color: black; padding: 12px 0; font-family: 'JetBrains Mono', monospace; font-weight: 900; z-index: 1000; overflow: hidden; }
+        .ticker-content { display: inline-block; animation: scroll 25s linear infinite; white-space: nowrap; }
+        
+        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        @keyframes logoPulse { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; } }
+    </style>
 </head>
 <body>
 
-    <div id="splash-screen">
-        <img id="splash-logo" src="puertodev.png" alt="Puerto Dev Logo">
-    </div>
+    <div id="splash-screen">
+        <img id="splash-logo" src="puertodev.png" alt="Puerto Dev Logo">
+    </div>
 
-    <div class="audio-container">
-        <div class="audio-tab" onclick="toggleAudio()" id="audio-btn">[ SOUND_OFF ]</div>
-        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.4">
-    </div>
+    <div class="audio-container">
+        <div class="audio-tab" onclick="toggleAudio()" id="audio-btn">[ SOUND_OFF ]</div>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.4">
+    </div>
 
-    <header class="stage-header">
-        <div class="slideshow-container">
-            <video class="slide-video" autoplay muted loop playsinline><source src="Knightfallprev.mp4" type="video/mp4"></video>
-            <video class="slide-video" autoplay muted loop playsinline><source src=".mp4" type="video/mp4"></video>
-            <video class="slide-video" autoplay muted loop playsinline><source src="deadstreet.mp4" type="video/mp4"></video>
-            <video class="slide-video" autoplay muted loop playsinline><source src="Lasthope.mp4" type="video/mp4"></video>
-        </div>
-        <div class="header-content">
-            <h1>PUERTO PORTAL</h1>
-            <div class="system-status">>> BATCH_2026</div>
-        </div>
-    </header>
+    <header class="stage-header">
+        <div class="slideshow-container">
+            <video class="slide-video" autoplay muted loop playsinline><source src="Knightfallprev.mp4" type="video/mp4"></video>
+            <video class="slide-video" autoplay muted loop playsinline><source src=".mp4" type="video/mp4"></video>
+            <video class="slide-video" autoplay muted loop playsinline><source src="deadstreet.mp4" type="video/mp4"></video>
+            <video class="slide-video" autoplay muted loop playsinline><source src="Lasthope.mp4" type="video/mp4"></video>
+        </div>
+        <div class="header-content">
+            <h1>PUERTO PORTAL</h1>
+            <div class="system-status">>> BATCH_2026</div>
+        </div>
+    </header>
 
-    <div class="portal-grid">
-        <a href="knightfallweb.html?game=knightfall" class="tekken-card" onmouseenter="playHover(this)" onmouseleave="stopPreview(this)">
-            <div class="card-poster" style="background-image: url('knightfallposter.jfif');"></div>
-            <div class="card-video-container"><video muted loop playsinline><source src="Knightfallprev.mp4" type="video/mp4"></video></div>
-            <div class="card-inner"><div class="game-title">KNIGHTFALL:<br>RECLAIMING COC</div></div>
-        </a>
+    <div class="portal-grid">
+        <a href="knightfallweb.html?game=knightfall" class="tekken-card" onmouseenter="playHover(this)" onmouseleave="stopPreview(this)">
+            <div class="card-poster" style="background-image: url('knightfallposter.jfif');"></div>
+            <div class="card-video-container"><video muted loop playsinline><source src="Knightfallprev.mp4" type="video/mp4"></video></div>
+            <div class="card-inner"><div class="game-title">KNIGHTFALL:<br>RECLAIMING COC</div></div>
+        </a>
 
-        <a href="lasthope.html?game=lasthope" class="tekken-card" onmouseenter="playHover(this)" onmouseleave="stopPreview(this)">
-            <div class="card-poster" style="background-image: url('hopeposter.png');"></div>
-            <div class="card-video-container"><video muted loop playsinline><source src="Lasthope.mp4" type="video/mp4"></video></div>
-            <div class="card-inner"><div class="game-title">THE LAST HOPE</div></div>
-        </a>
+        <a href="lasthope.html?game=lasthope" class="tekken-card" onmouseenter="playHover(this)" onmouseleave="stopPreview(this)">
+            <div class="card-poster" style="background-image: url('hopeposter.png');"></div>
+            <div class="card-video-container"><video muted loop playsinline><source src="Lasthope.mp4" type="video/mp4"></video></div>
+            <div class="card-inner"><div class="game-title">THE LAST HOPE</div></div>
+        </a>
 
-        <a href="deadstreet.html?game=deadstreet" class="tekken-card" onmouseenter="playHover(this)" onmouseleave="stopPreview(this)">
-            <div class="card-poster" style="background-image: url('dead.jpg');"></div>
-            <div class="card-video-container"><video muted loop playsinline><source src="deadstreet.mp4" type="video/mp4"></video></div>
-            <div class="card-inner"><div class="game-title">THE DEAD STREET</div></div>
-        </a>
+        <a href="deadstreet.html?game=deadstreet" class="tekken-card" onmouseenter="playHover(this)" onmouseleave="stopPreview(this)">
+            <div class="card-poster" style="background-image: url('dead.jpg');"></div>
+            <div class="card-video-container"><video muted loop playsinline><source src="deadstreet.mp4" type="video/mp4"></video></div>
+            <div class="card-inner"><div class="game-title">THE DEAD STREET</div></div>
+        </a>
 
-      <a href="RECMAR_FINAL.HTML?game=recmar" class="tekken-card" onmouseenter="playHover(this)" onmouseleave="stopPreview(this)">
-            <div class="card-poster" style="background-image: url('recmarposter.jpg');"></div>
-            <div class="card-video-container"><video muted loop playsinline><source src="Recmar.mp4" type="video/mp4"></video></div>
-            <div class="card-inner"><div class="game-title">RECMAR:<br>HARI NG MANOK</div></div>
-        </a>
-    </div>
+      <a href="RECMAR_FINAL.HTML?game=recmar" class="tekken-card" onmouseenter="playHover(this)" onmouseleave="stopPreview(this)">
+            <div class="card-poster" style="background-image: url('recmarposter.jpg');"></div>
+            <div class="card-video-container"><video muted loop playsinline><source src="Recmar.mp4" type="video/mp4"></video></div>
+            <div class="card-inner"><div class="game-title">RECMAR:<br>HARI NG MANOK</div></div>
+        </a>
+    </div>
 
-    <div class="class-highlight">
-        <img src="gamedevexpo.jpg" class="class-photo" alt="Game Dev Expo 2026">
-        <div class="class-overlay">
-            <span class="class-tag">OFFICIAL_SNAPSHOT // EXPO_2026</span>
-            <h2 style="font-family: 'Barlow Condensed'; margin: 15px 0 0 0; font-size: 3rem; font-style: italic; text-shadow: 0 0 20px var(--neon-red);">OUR CLASS HIGHLIGHTS</h2>
-        </div>
-    </div>
+    <div class="class-highlight">
+        <img src="gamedevexpo.jpg" class="class-photo" alt="Game Dev Expo 2026">
+        <div class="class-overlay">
+            <span class="class-tag">OFFICIAL_SNAPSHOT // EXPO_2026</span>
+            <h2 style="font-family: 'Barlow Condensed'; margin: 15px 0 0 0; font-size: 3rem; font-style: italic; text-shadow: 0 0 20px var(--neon-red);">OUR CLASS HIGHLIGHTS</h2>
+        </div>
+    </div>
 
-    <div class="info-section-bottom">
-        <div class="info-box">
-            [<b>PROJECT_INFO</b>]<br>
-            Developed by <b>Puerto COC Students</b>. 
-            This portal is the main uplink for all games developed by the Puerto Campus Students.<b>Batch 2026</b>.
-        </div>
-    </div>
+    <div class="info-section-bottom">
+        <div class="info-box">
+            [<b>PROJECT_INFO</b>]<br>
+            Developed by <b>Puerto COC Students</b>. 
+            This portal is the main uplink for all games developed by the Puerto Campus Students.<b>Batch 2026</b>.
+        </div>
+    </div>
 
-    <div class="news-ticker">
-        <div class="ticker-content">
-            BATCH 2026 ONLINE... GAME DEVELOPMENT 2026.....PUERTO CAMPUS... WELCOME COC STUDENTS... CONNECTION STABLE...
-        </div>
-    </div>
+    <div class="news-ticker">
+        <div class="ticker-content">
+            BATCH 2026 ONLINE... GAME DEVELOPMENT 2026.....PUERTO CAMPUS... WELCOME COC STUDENTS... CONNECTION STABLE...
+        </div>
+    </div>
 
-    <audio id="bgMusic" loop><source src="homepage.mp3" type="audio/mpeg"></audio>
-    <audio id="hoverSound" preload="auto"><source src="SELECTION.mp3" type="audio/mpeg"></audio>
+    <audio id="bgMusic" loop><source src="homepage.mp3" type="audio/mpeg"></audio>
+    <audio id="hoverSound" preload="auto"><source src="SELECTION.mp3" type="audio/mpeg"></audio>
 
-    <script>
-        const sound = document.getElementById("hoverSound");
-        const music = document.getElementById("bgMusic");
-        const audioBtn = document.getElementById("audio-btn");
-        const volumeSlider = document.getElementById("volume-slider");
-        let isMuted = true;
+    <script>
+        const sound = document.getElementById("hoverSound");
+        const music = document.getElementById("bgMusic");
+        const audioBtn = document.getElementById("audio-btn");
+        const volumeSlider = document.getElementById("volume-slider");
+        let isMuted = true;
 
-        music.volume = 0.4; 
+        music.volume = 0.4; 
 
-        window.addEventListener('load', () => {
-            const headerVideos = document.querySelectorAll('.slide-video');
-            headerVideos.forEach(v => v.play().catch(e => {}));
+        window.addEventListener('load', () => {
+            const headerVideos = document.querySelectorAll('.slide-video');
+            headerVideos.forEach(v => v.play().catch(e => {}));
 
-            setTimeout(() => {
-                const splash = document.getElementById('splash-screen');
-                splash.style.opacity = '0';
-                setTimeout(() => splash.style.display = 'none', 1000);
-            }, 2000);
-        });
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                splash.style.opacity = '0';
+                setTimeout(() => splash.style.display = 'none', 1000);
+            }, 3000);
+        });
 
-        function toggleAudio() {
-            if (isMuted) {
-                music.play().catch(e => {});
-                audioBtn.innerHTML = "[ SOUND_ON ]";
-                isMuted = false;
-            } else {
-                music.pause();
-                audioBtn.innerHTML = "[ SOUND_OFF ]";
-                isMuted = true;
-            }
-        }
+        function toggleAudio() {
+            if (isMuted) {
+                music.play().catch(e => {});
+                audioBtn.innerHTML = "[ SOUND_ON ]";
+                isMuted = false;
+            } else {
+                music.pause();
+                audioBtn.innerHTML = "[ SOUND_OFF ]";
+                isMuted = true;
+            }
+        }
 
-        volumeSlider.addEventListener("input", (e) => {
-            music.volume = e.target.value;
-        });
+        volumeSlider.addEventListener("input", (e) => {
+            music.volume = e.target.value;
+        });
 
-        function playHover(card) {
-            if (!isMuted && sound) {
-                sound.pause();
-                sound.currentTime = 0;
-                sound.play().catch(e => {});
-            }
-            const vid = card.querySelector('video');
-            if (vid) vid.play();
-        }
+        function playHover(card) {
+            if (!isMuted && sound) {
+                sound.pause();
+                sound.currentTime = 0;
+                sound.play().catch(e => {});
+            }
+            const vid = card.querySelector('video');
+            if (vid) vid.play();
+        }
 
-        function stopPreview(card) {
-            const vid = card.querySelector('video');
-            if (vid) {
-                vid.pause();
-                vid.currentTime = 0;
-            }
-        }
-    </script>
+        function stopPreview(card) {
+            const vid = card.querySelector('video');
+            if (vid) {
+                vid.pause();
+                vid.currentTime = 0;
+            }
+        }
+    </script>
 </body>
 </html>

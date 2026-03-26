@@ -111,8 +111,47 @@
 
         <div class="btn-container">
             <a href="https://play.unity.com/en/games/cd4dbb41-5566-45dd-9310-aaae5433e38a/the-last-hope" target="_blank" class="play-btn">EXECUTE_GAME</a>
-            <a href="index.html" class="back-link">_RETURN_TO_HUB</a>
         </div>
+            <div class="nav-footer">
+    <a href="index.html" class="hub-btn">
+        _RETURN_TO_GAME_HUB
+    </a>
+
+    <style>
+        .nav-footer {
+            margin-top: 15px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hub-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #333;
+            color: #555;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            text-decoration: none;
+            text-align: center;
+            transition: 0.3s ease;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            /* Inverted clip-path to contrast with the main play button */
+            clip-path: polygon(0 0, 98% 0, 100% 100%, 2% 100%);
+        }
+
+        .hub-btn:hover {
+            border-color: #ff003c; /* Puerto Red */
+            color: #ff003c;
+            background: rgba(255, 0, 60, 0.08);
+            text-shadow: 0 0 10px #ff003c;
+            letter-spacing: 4px; /* Subtle expansion effect */
+        }
+    </style>
+</div>
     </div>
 
 </body>
